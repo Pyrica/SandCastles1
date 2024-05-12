@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using SandCastles1;
+using System.Collections.Generic;
 
 namespace SandCastles1
 {
@@ -19,6 +20,7 @@ namespace SandCastles1
         private SpriteBatch _spriteBatch;
         private Player player;
         private Stat stat = Stat.SplashScreen;
+        private List<Rectangle> obstacles;
 
         public Game1()
         {
@@ -47,8 +49,14 @@ namespace SandCastles1
             player = new Player(playerTexture, new Vector2(100, 100), 2f);
             CaveWithMonsters.CaveWithMonstersBackground = Content.Load<Texture2D>("CaveWithMonstersBack");
 
-
+            obstacles = new List<Rectangle>
+            {
+                new Rectangle(930, 100, 100, 50),
+            };
         }
+
+
+    
 
         protected override void Update(GameTime gameTime)
         {
@@ -60,14 +68,14 @@ namespace SandCastles1
                         stat = Stat.Game;
                     break;
                 case Stat.Game:
-                    player.Update(gameTime);
+                    player.Update(gameTime, obstacles);
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
                     if (Keyboard.GetState().IsKeyDown(Keys.E))
                         stat = Stat.Game2;
                     break;
                 case Stat.Game2:
-                    player.Update(gameTime);
+                    player.Update(gameTime, obstacles);
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
                     break;
