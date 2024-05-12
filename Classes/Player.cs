@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace SandCastles1
 {
@@ -30,17 +31,35 @@ namespace SandCastles1
             );
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, List<Rectangle> obstacles)
         {
+            Rectangle playerRectangle = new Rectangle((int)playerPosition.X, (int)playerPosition.Y, (int)(playerTexture.Width * scale), (int)(playerTexture.Height * scale));
             var kstate = Keyboard.GetState();
-            if (kstate.IsKeyDown(Keys.W) && playerPosition.Y > 0)
-                playerPosition.Y -= 2 * playerSpeed;
-            if (kstate.IsKeyDown(Keys.S) && playerPosition.Y >= 0)
-                playerPosition.Y += 2 * playerSpeed;
-            if (kstate.IsKeyDown(Keys.A) && playerPosition.X > 0)
-                playerPosition.X -= 2 * playerSpeed;
-            if (kstate.IsKeyDown(Keys.D) && playerPosition.X >= 0)
-                playerPosition.X += 2 * playerSpeed;
+            Vector2 previousPosition = playerPosition;
+
+            if (kstate.IsKeyDown(Keys.W))
+                playerPosition.Y -= 2*playerSpeed;
+            if (kstate.IsKeyDown(Keys.S))
+                playerPosition.Y += 2*playerSpeed;
+            if (kstate.IsKeyDown(Keys.A))
+                playerPosition.X -= 2*playerSpeed;
+            if (kstate.IsKeyDown(Keys.D))
+                playerPosition.X += 2*playerSpeed;
+
+            playerRectangle = new Rectangle((int)playerPosition.X, (int)playerPosition.Y, playerRectangle.Width, playerRectangle.Height);
+
+            foreach (var obstacle in obstacles)
+            {
+                if (playerRectangle.Intersects(obstacle))
+                {
+
+                    playerPosition = previousPosition;
+                    break;
+                }
+            }
+
+            playerPosition.X = MathHelper.Clamp(playerPosition.X, 80, 1600 - playerRectangle.Width);
+            playerPosition.Y = MathHelper.Clamp(playerPosition.Y, 80, 970 - playerRectangle.Height);
 
             UpdateDestinationRectangle();
         }
