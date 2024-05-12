@@ -19,6 +19,7 @@ namespace SandCastles1
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Player player;
+        private PlayerWithMonsters playerWithMonsters;
         private Stat stat = Stat.SplashScreen;
         private List<Rectangle> obstacles;
 
@@ -53,6 +54,9 @@ namespace SandCastles1
             {
                 new Rectangle(930, 100, 100, 50),
             };
+            var playerWithMonstersTexture = Content.Load<Texture2D>("PlayerWithGun");
+            playerWithMonsters = new PlayerWithMonsters(playerWithMonstersTexture, new Vector2(100, 100), 2f);
+            CaveWithMonsters.CaveWithMonstersBackground = Content.Load<Texture2D>("CaveWithMonstersBack");
         }
 
 
@@ -75,7 +79,7 @@ namespace SandCastles1
                         stat = Stat.Game2;
                     break;
                 case Stat.Game2:
-                    player.Update(gameTime, obstacles);
+                    playerWithMonsters.Update(gameTime, obstacles);
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
                     break;
@@ -98,7 +102,7 @@ namespace SandCastles1
                     break;
                 case Stat.Game2:
                     CaveWithMonsters.Draw(_spriteBatch);
-                    player.Draw(_spriteBatch);
+                    playerWithMonsters.Draw(_spriteBatch);
                     break;
             }
             _spriteBatch.End();
