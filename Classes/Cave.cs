@@ -1,21 +1,23 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 
-namespace SandCastles1.Classes
+namespace SandCastles1
 {
-    class Cave
+    static class Cave
     {
-        public static int Width, Height;
-        public static Random Random = new Random();
+        public static Texture2D CaveBackground { get; set; }
 
-        public static int GetIntRandom(int min, int max)
+        public static void Draw(SpriteBatch spriteBatch)
         {
-            return Random.Next(min, max);
+            spriteBatch.Draw(CaveBackground, new Rectangle(0, 0 , 1680, 1050), Color.White);
         }
     }
-
-    
 }
+
+
