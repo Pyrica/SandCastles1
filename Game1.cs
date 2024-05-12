@@ -9,6 +9,7 @@ namespace SandCastles1
     {
         SplashScreen,
         Game,
+        Game2,
         Final,
         Pause
     }
@@ -40,10 +41,11 @@ namespace SandCastles1
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             SplashScreen.Background = Content.Load<Texture2D>("background");
             SplashScreen.Font = Content.Load<SpriteFont>("SplashFont");
-            var playerTexture = Content.Load<Texture2D>("player");
-            Cave.CaveBackground = Content.Load<Texture2D>("caveBackground");
+            var playerTexture = Content.Load<Texture2D>("Player");
+            Cave.CaveBackground = Content.Load<Texture2D>("CaveBackground");
 
             player = new Player(playerTexture, new Vector2(100, 100), 2f);
+            CaveWithMonsters.CaveWithMonstersBackground = Content.Load<Texture2D>("CaveWithMonstersBack");
 
 
         }
@@ -58,6 +60,13 @@ namespace SandCastles1
                         stat = Stat.Game;
                     break;
                 case Stat.Game:
+                    player.Update(gameTime);
+                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                        stat = Stat.SplashScreen;
+                    if (Keyboard.GetState().IsKeyDown(Keys.E))
+                        stat = Stat.Game2;
+                    break;
+                case Stat.Game2:
                     player.Update(gameTime);
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
@@ -77,6 +86,10 @@ namespace SandCastles1
                     break;
                 case Stat.Game:
                     Cave.Draw(_spriteBatch);
+                    player.Draw(_spriteBatch);
+                    break;
+                case Stat.Game2:
+                    CaveWithMonsters.Draw(_spriteBatch);
                     player.Draw(_spriteBatch);
                     break;
             }
