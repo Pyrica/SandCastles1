@@ -53,6 +53,14 @@ namespace SandCastles1
             obstacles = new List<Rectangle>
             {
                 new Rectangle(930, 100, 100, 50),
+                new Rectangle(967, 440, 0, 0),
+                new Rectangle(650, 620, 70, 40),
+                new Rectangle(70,540,140,60),
+                new Rectangle(70,760,140,80),
+                new Rectangle(1550,250,130,50),
+                new Rectangle(1550,460,130,40),
+                new Rectangle(1550,580,130,70),
+                new Rectangle(1000,80,150,20)
             };
             var playerWithMonstersTexture = Content.Load<Texture2D>("PlayerWithGun");
             playerWithMonsters = new PlayerWithMonsters(playerWithMonstersTexture, new Vector2(100, 100), 2f);
