@@ -18,6 +18,7 @@ namespace SandCastles1
         private Rectangle destinationRectangle;
         float playerSpeed;
         float scale = 0.1f;
+      
 
         public PlayerWithMonsters(Texture2D texture, Vector2 position, float speed)
         {
@@ -37,26 +38,26 @@ namespace SandCastles1
             );
         }
 
-        public void Update(GameTime gameTime, List<Rectangle> obstacles)
+        public void Update(GameTime gameTime, List<Rectangle> stones)
         {
             Rectangle playerRectangle = new Rectangle((int)playerWithMonstersPosition.X, (int)playerWithMonstersPosition.Y, (int)(playerWithMonstersTexture.Width * scale), (int)(playerWithMonstersTexture.Height * scale));
             var kstate = Keyboard.GetState();
             Vector2 previousPosition = playerWithMonstersPosition;
 
             if (kstate.IsKeyDown(Keys.W))
-                playerWithMonstersPosition.Y -= 2 * playerSpeed;
+                playerWithMonstersPosition.Y -= 3 * playerSpeed;
             if (kstate.IsKeyDown(Keys.S))
-                playerWithMonstersPosition.Y += 2 * playerSpeed;
+                playerWithMonstersPosition.Y += 3 * playerSpeed;
             if (kstate.IsKeyDown(Keys.A))
-                playerWithMonstersPosition.X -= 2 * playerSpeed;
+                playerWithMonstersPosition.X -= 3 * playerSpeed;
             if (kstate.IsKeyDown(Keys.D))
-                playerWithMonstersPosition.X += 2 * playerSpeed;
+                playerWithMonstersPosition.X += 3 * playerSpeed;
 
             playerRectangle = new Rectangle((int)playerWithMonstersPosition.X, (int)playerWithMonstersPosition.Y, playerRectangle.Width, playerRectangle.Height);
 
-            foreach (var obstacle in obstacles)
+            foreach (var stone in stones)
             {
-                if (playerRectangle.Intersects(obstacle))
+                if (playerRectangle.Intersects(stone))
                 {
 
                     playerWithMonstersPosition = previousPosition;

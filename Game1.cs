@@ -22,6 +22,7 @@ namespace SandCastles1
         private PlayerWithMonsters playerWithMonsters;
         private Stat stat = Stat.SplashScreen;
         private List<Rectangle> obstacles;
+        private List<Rectangle> stones;
 
         public Game1()
         {
@@ -48,7 +49,6 @@ namespace SandCastles1
             Cave.CaveBackground = Content.Load<Texture2D>("CaveBackground");
 
             player = new Player(playerTexture, new Vector2(100, 100), 2f);
-            CaveWithMonsters.CaveWithMonstersBackground = Content.Load<Texture2D>("CaveWithMonstersBack");
 
             obstacles = new List<Rectangle>
             {
@@ -64,7 +64,16 @@ namespace SandCastles1
             };
             var playerWithMonstersTexture = Content.Load<Texture2D>("PlayerWithGun");
             playerWithMonsters = new PlayerWithMonsters(playerWithMonstersTexture, new Vector2(100, 100), 2f);
-            CaveWithMonsters.CaveWithMonstersBackground = Content.Load<Texture2D>("CaveWithMonstersBack");
+            CaveWithMonsters.CaveWithMonstersBackground = Content.Load<Texture2D>("CaveWithMonstersBack1");
+
+            stones = new List<Rectangle>
+            {
+                new Rectangle(530, 440, 80,10),
+                new Rectangle(660, 230, 90,10),
+                new Rectangle(380, 780, 100,10),
+                new Rectangle(700, 705, 60,10),
+
+            };
         }
 
 
@@ -87,7 +96,7 @@ namespace SandCastles1
                         stat = Stat.Game2;
                     break;
                 case Stat.Game2:
-                    playerWithMonsters.Update(gameTime, obstacles);
+                    playerWithMonsters.Update(gameTime, stones);
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
                     break;
