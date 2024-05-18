@@ -23,9 +23,15 @@ namespace SandCastles1
         private Stat stat = Stat.SplashScreen;
         private List<Rectangle> obstacles;
         private List<Rectangle> stones;
+        private Monster monster;
+        
+
+        
+
 
         public Game1()
         {
+            
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -47,6 +53,11 @@ namespace SandCastles1
             SplashScreen.Font = Content.Load<SpriteFont>("SplashFont");
             var playerTexture = Content.Load<Texture2D>("Player");
             Cave.CaveBackground = Content.Load<Texture2D>("CaveBackground");
+            var monsterTexture = Content.Load<Texture2D>("Monster");
+            player = new Player(playerTexture, new Vector2(100, 100), 2f);
+            monster = new Monster(monsterTexture, new Vector2(800, 500), 2f);
+            
+
 
             player = new Player(playerTexture, new Vector2(100, 100), 2f);
 
@@ -94,11 +105,18 @@ namespace SandCastles1
                         stat = Stat.SplashScreen;
                     if (Keyboard.GetState().IsKeyDown(Keys.E))
                         stat = Stat.Game2;
+
                     break;
                 case Stat.Game2:
-                    playerWithMonsters.Update(gameTime, stones);
+                    playerWithMonsters.Update(gameTime, stones, monster);
+                    monster.Update(gameTime, playerWithMonsters.Position, playerWithMonsters);
+                    
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
+                    break;
+                case Stat.Pause:
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                        stat = Stat.Game;
                     break;
             }
             base.Update(gameTime);
@@ -120,11 +138,16 @@ namespace SandCastles1
                 case Stat.Game2:
                     CaveWithMonsters.Draw(_spriteBatch);
                     playerWithMonsters.Draw(_spriteBatch);
+                    monster.Draw(_spriteBatch);
                     break;
             }
             _spriteBatch.End();
             base.Draw(gameTime);
         }
+
+        
+
+
     }
 }
 

@@ -17,6 +17,11 @@ namespace SandCastles1
         {
             spriteBatch.Draw(CaveBackground, new Rectangle(0, 0 , 1680, 1050), Color.White);
         }
+
+        public static void EnterCave()
+        {
+            Game1.stat = Stat.Game;
+        }
     }
 }
 
