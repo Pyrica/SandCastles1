@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace SandCastles1
 {
@@ -18,7 +19,8 @@ namespace SandCastles1
         private Rectangle destinationRectangle;
         float playerSpeed;
         float scale = 0.1f;
-      
+
+        public Vector2 Position { get; internal set; }
 
         public PlayerWithMonsters(Texture2D texture, Vector2 position, float speed)
         {
@@ -38,7 +40,7 @@ namespace SandCastles1
             );
         }
 
-        public void Update(GameTime gameTime, List<Rectangle> stones)
+        public void Update(GameTime gameTime, List<Rectangle> stones, Monster monster)
         {
             Rectangle playerRectangle = new Rectangle((int)playerWithMonstersPosition.X, (int)playerWithMonstersPosition.Y, (int)(playerWithMonstersTexture.Width * scale), (int)(playerWithMonstersTexture.Height * scale));
             var kstate = Keyboard.GetState();
@@ -68,8 +70,12 @@ namespace SandCastles1
             playerWithMonstersPosition.X = MathHelper.Clamp(playerWithMonstersPosition.X, 80, 1600 - playerRectangle.Width);
             playerWithMonstersPosition.Y = MathHelper.Clamp(playerWithMonstersPosition.Y, 80, 970 - playerRectangle.Height);
 
+            
+
             UpdateDestinationRectangle();
         }
+
+        
 
         public void Draw(SpriteBatch spriteBatch)
         {
