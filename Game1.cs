@@ -53,7 +53,7 @@ namespace SandCastles1
             SplashScreen.Font = Content.Load<SpriteFont>("SplashFont");
             var playerTexture = Content.Load<Texture2D>("Player");
             Cave.CaveBackground = Content.Load<Texture2D>("CaveBackground");
-            var monsterTexture = Content.Load<Texture2D>("Monster");
+            var monsterTexture = Content.Load<Texture2D>("Monster1");
             player = new Player(playerTexture, new Vector2(100, 100), 2f);
             monster = new Monster(monsterTexture, new Vector2(800, 500), 2f);
             
@@ -109,15 +109,19 @@ namespace SandCastles1
                     break;
                 case Stat.Game2:
                     playerWithMonsters.Update(gameTime, stones, monster);
-                    monster.Update(gameTime, playerWithMonsters.Position, playerWithMonsters);
+                    monster.Update(gameTime, playerWithMonsters.Position, stones);
                     
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
+                    if (PlayerWithMonsters.Health <= 0)
+                    {
+                        stat= Stat.Game;
+                        PlayerWithMonsters.Health = 100;
+                        var monsterTexture = Content.Load<Texture2D>("Monster1");
+                        monster = new Monster(monsterTexture, new Vector2(800, 500), 2f);
+                    }
                     break;
-                case Stat.Pause:
-                    if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-                        stat = Stat.Game;
-                    break;
+               
             }
             base.Update(gameTime);
         }

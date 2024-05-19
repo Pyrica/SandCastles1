@@ -21,6 +21,7 @@ namespace SandCastles1
         float scale = 0.1f;
 
         public Vector2 Position { get; internal set; }
+        public static int Health { get; set; } = 100;
 
         public PlayerWithMonsters(Texture2D texture, Vector2 position, float speed)
         {
@@ -70,17 +71,22 @@ namespace SandCastles1
             playerWithMonstersPosition.X = MathHelper.Clamp(playerWithMonstersPosition.X, 80, 1600 - playerRectangle.Width);
             playerWithMonstersPosition.Y = MathHelper.Clamp(playerWithMonstersPosition.Y, 80, 970 - playerRectangle.Height);
 
-            
+            if (playerRectangle.Intersects(monster.MonsterRectangle))
+            {
+                Health--;
+               
+            }
 
             UpdateDestinationRectangle();
         }
 
-        
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(playerWithMonstersTexture, destinationRectangle, Color.White);
         }
+
+        
     }
 }
 

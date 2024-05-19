@@ -11,6 +11,7 @@ namespace SandCastles1
 {
     class CaveWithMonsters
     {
+        public static SpriteFont FontHealth { get; set; }
         public static Texture2D CaveWithMonstersBackground { get; set; }
 
         public static void Draw(SpriteBatch spriteBatch)
