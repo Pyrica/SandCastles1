@@ -1,11 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 
 namespace SandCastles1
 {
@@ -13,13 +7,16 @@ namespace SandCastles1
     {
         public static Texture2D CaveBackground { get; set; }
 
-        public static void Draw(SpriteBatch spriteBatch)
+        public static void Draw(SpriteBatch spriteBatch, SpriteFont font, string text)
         {
-            spriteBatch.Draw(CaveBackground, new Rectangle(0, 0 , 1680, 1050), Color.White);
-        }
+            spriteBatch.Draw(CaveBackground, new Rectangle(0, 0, 1680, 1050), Color.White);
 
-       
+            if (!string.IsNullOrEmpty(text))
+            {
+                Vector2 textSize = font.MeasureString(text);
+                Vector2 textPosition = new Vector2(130, 170);
+                spriteBatch.DrawString(font, text, textPosition, Color.White);
+            }
+        }
     }
 }
-
-

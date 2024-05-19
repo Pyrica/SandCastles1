@@ -10,6 +10,7 @@ namespace SandCastles1
         SplashScreen,
         Game,
         Game2,
+        PlayerDead,
         Final,
         Pause
     }
@@ -25,6 +26,7 @@ namespace SandCastles1
         private List<Rectangle> stones;
         private List<Bullet> bullets;
         private List<MonsterBase> monsters;
+        private SpriteFont font;
 
         public Game1()
         {
@@ -53,6 +55,7 @@ namespace SandCastles1
             var monsterTexture2 = Content.Load<Texture2D>("Monster2");
             var monsterTexture3 = Content.Load<Texture2D>("Monster3");
             var bulletTexture = Content.Load<Texture2D>("Bullet");
+            PlayerDead.Dead = Content.Load<SpriteFont>("Dead");
 
             player = new Player(playerTexture, new Vector2(100, 100), 2f);
             bullets = new List<Bullet>();
@@ -87,22 +90,27 @@ namespace SandCastles1
                 new Rectangle(380, 780, 100,10),
                 new Rectangle(700, 705, 60,10),
             };
+
+            // Load the font
+            font = Content.Load<SpriteFont>("Start");
         }
 
         protected override void Update(GameTime gameTime)
         {
+            var keyboardState = Keyboard.GetState();
+
             switch (stat)
             {
                 case Stat.SplashScreen:
                     SplashScreen.Update();
-                    if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                    if (keyboardState.IsKeyDown(Keys.Space))
                         stat = Stat.Game;
                     break;
                 case Stat.Game:
                     player.Update(gameTime, obstacles);
-                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    if (keyboardState.IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
-                    if (Keyboard.GetState().IsKeyDown(Keys.E))
+                    if (keyboardState.IsKeyDown(Keys.E))
                         stat = Stat.Game2;
                     break;
                 case Stat.Game2:
@@ -120,10 +128,18 @@ namespace SandCastles1
 
                     monsters.RemoveAll(m => m.IsDead);
 
-                    if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+                    if (keyboardState.IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
 
                     if (PlayerWithMonsters.Health <= 0)
+                    {
+                        stat = Stat.PlayerDead;
+                    }
+
+                    bullets.RemoveAll(b => !b.IsVisible);
+                    break;
+                case Stat.PlayerDead:
+                    if (keyboardState.IsKeyDown(Keys.R))
                     {
                         stat = Stat.Game;
                         PlayerWithMonsters.Health = 100;
@@ -134,8 +150,6 @@ namespace SandCastles1
                             new Monster3(Content.Load<Texture2D>("Monster3"), new Vector2(1000, 500), 2f)
                         };
                     }
-
-                    bullets.RemoveAll(b => !b.IsVisible);
                     break;
             }
 
@@ -153,7 +167,7 @@ namespace SandCastles1
                     SplashScreen.Draw(_spriteBatch);
                     break;
                 case Stat.Game:
-                    Cave.Draw(_spriteBatch);
+                    Cave.Draw(_spriteBatch, font, "чтобы\nначать\nнажмите\n  Е");
                     player.Draw(_spriteBatch);
                     break;
                 case Stat.Game2:
@@ -169,6 +183,9 @@ namespace SandCastles1
                     {
                         bullet.Draw(_spriteBatch);
                     }
+                    break;
+                case Stat.PlayerDead:
+                    PlayerDead.Draw(_spriteBatch);
                     break;
             }
 

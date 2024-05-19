@@ -61,6 +61,13 @@
 /processorParam:TextureFormat=Color
 /build:background.png;background
 
+#begin djn.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:djn.spritefont;Dead
+
 #begin File.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -115,6 +122,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:retro-cartoon-creepy-tarantula-free-png.webp;Monster1
+
+#begin Start.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Start.spritefont;Start
 
 #begin игрок с пистиком.png
 /importer:TextureImporter
