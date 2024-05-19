@@ -1,7 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
-using SandCastles1;
 using System.Collections.Generic;
 
 namespace SandCastles1
@@ -14,6 +13,7 @@ namespace SandCastles1
         Final,
         Pause
     }
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -23,15 +23,11 @@ namespace SandCastles1
         private Stat stat = Stat.SplashScreen;
         private List<Rectangle> obstacles;
         private List<Rectangle> stones;
-        private Monster monster;
-        
-
-        
-
+        private List<Bullet> bullets;
+        private List<MonsterBase> monsters;
 
         public Game1()
         {
-            
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -53,13 +49,18 @@ namespace SandCastles1
             SplashScreen.Font = Content.Load<SpriteFont>("SplashFont");
             var playerTexture = Content.Load<Texture2D>("Player");
             Cave.CaveBackground = Content.Load<Texture2D>("CaveBackground");
-            var monsterTexture = Content.Load<Texture2D>("Monster1");
-            player = new Player(playerTexture, new Vector2(100, 100), 2f);
-            monster = new Monster(monsterTexture, new Vector2(800, 500), 2f);
-            
-
+            var monsterTexture1 = Content.Load<Texture2D>("Monster1");
+            var monsterTexture2 = Content.Load<Texture2D>("Monster2");
+            var bulletTexture = Content.Load<Texture2D>("Bullet");
 
             player = new Player(playerTexture, new Vector2(100, 100), 2f);
+            bullets = new List<Bullet>();
+
+            monsters = new List<MonsterBase>
+            {
+                new Monster1(monsterTexture1, new Vector2(800, 500), 2f),
+                new Monster2(monsterTexture2, new Vector2(900, 500), 2f)
+            };
 
             obstacles = new List<Rectangle>
             {
@@ -83,12 +84,8 @@ namespace SandCastles1
                 new Rectangle(660, 230, 90,10),
                 new Rectangle(380, 780, 100,10),
                 new Rectangle(700, 705, 60,10),
-
             };
         }
-
-
-    
 
         protected override void Update(GameTime gameTime)
         {
@@ -105,24 +102,41 @@ namespace SandCastles1
                         stat = Stat.SplashScreen;
                     if (Keyboard.GetState().IsKeyDown(Keys.E))
                         stat = Stat.Game2;
-
                     break;
                 case Stat.Game2:
-                    playerWithMonsters.Update(gameTime, stones, monster);
-                    monster.Update(gameTime, stones);
-                    
+                    playerWithMonsters.Update(gameTime, stones, bullets, Content.Load<Texture2D>("Bullet"), monsters);
+
+                    foreach (var bullet in bullets)
+                    {
+                        bullet.Update(gameTime, stones);
+                    }
+
+                    foreach (var monster in monsters)
+                    {
+                        monster.Update(gameTime, stones, bullets);
+                    }
+
+                    // Remove dead monsters
+                    monsters.RemoveAll(m => m.IsDead);
+
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;
+
                     if (PlayerWithMonsters.Health <= 0)
                     {
-                        stat= Stat.Game;
+                        stat = Stat.Game;
                         PlayerWithMonsters.Health = 100;
-                        var monsterTexture = Content.Load<Texture2D>("Monster1");
-                        monster = new Monster(monsterTexture, new Vector2(800, 500), 2f);
+                        monsters = new List<MonsterBase>
+                        {
+                            new Monster1(Content.Load<Texture2D>("Monster1"), new Vector2(800, 500), 2f),
+                            new Monster2(Content.Load<Texture2D>("Monster2"), new Vector2(1000, 800), 2f)
+                        };
                     }
+
+                    bullets.RemoveAll(b => !b.IsVisible);
                     break;
-               
             }
+
             base.Update(gameTime);
         }
 
@@ -130,6 +144,7 @@ namespace SandCastles1
         {
             GraphicsDevice.Clear(Color.Black);
             _spriteBatch.Begin();
+
             switch (stat)
             {
                 case Stat.SplashScreen:
@@ -142,16 +157,21 @@ namespace SandCastles1
                 case Stat.Game2:
                     CaveWithMonsters.Draw(_spriteBatch);
                     playerWithMonsters.Draw(_spriteBatch);
-                    monster.Draw(_spriteBatch);
+
+                    foreach (var monster in monsters)
+                    {
+                        monster.Draw(_spriteBatch);
+                    }
+
+                    foreach (var bullet in bullets)
+                    {
+                        bullet.Draw(_spriteBatch);
+                    }
                     break;
             }
+
             _spriteBatch.End();
             base.Draw(gameTime);
         }
-
-        
-
-
     }
 }
-
