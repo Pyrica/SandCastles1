@@ -14,7 +14,7 @@ namespace SandCastles1
         private float playerSpeed;
         private readonly float scale = 0.1f;
 
-        private float fireRate = 0.5f; // Fire rate in seconds
+        private float fireRate = 0.5f;
         private float timeSinceLastShot = 0;
 
         public Vector2 Position { get; internal set; }
@@ -87,7 +87,6 @@ namespace SandCastles1
 
         private void Shoot(List<Bullet> bullets, Texture2D bulletTexture)
         {
-            // Calculate the center position of the player sprite
             Vector2 bulletStartPosition = new Vector2(
                 playerWithMonstersPosition.X + (playerWithMonstersTexture.Width * scale / 2),
                 playerWithMonstersPosition.Y + (playerWithMonstersTexture.Height * scale / 2)
