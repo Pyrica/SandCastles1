@@ -11,8 +11,9 @@ namespace SandCastles1
         public Texture2D Monsters { get; set; }
         public Vector2 Position { get; set; }
         public float Speed { get; set; }
-        private float scale = 0.3f;
+        private readonly float scale = 0.2f;
         private Rectangle destinationRectangle;
+        public static Vector2 MonsterPosition;
 
         public Monster(Texture2D texture, Vector2 position, float speed)
         {
@@ -21,9 +22,11 @@ namespace SandCastles1
             Speed = speed;
         }
 
-        public void Update(GameTime gameTime, Vector2 playerPosition, PlayerWithMonsters playerWithMonsters)
+        public void Update(GameTime gameTime, Vector2 playerPosition, List<Rectangle> stones)
         {
+            Rectangle monsterRectangle = new Rectangle((int)MonsterPosition.X, (int)MonsterPosition.Y, (int)(Monsters.Width * scale), (int)(Monsters.Height * scale));
             playerPosition = PlayerWithMonsters.playerWithMonstersPosition;
+            Vector2 previousPosition = MonsterPosition;
             Vector2 direction = playerPosition - Position;
             if (direction != Vector2.Zero)
             {
@@ -31,7 +34,19 @@ namespace SandCastles1
             }
             Position += direction * 70 * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            
+            monsterRectangle = new Rectangle((int)MonsterPosition.X, (int)MonsterPosition.Y, monsterRectangle.Width, monsterRectangle.Height);
+
+            foreach (var stone in stones)
+            {
+                if (monsterRectangle.Intersects(stone))
+                {
+
+                    MonsterPosition = previousPosition;
+                    break;
+                }
+            }
+
+
 
         }
 
@@ -51,6 +66,19 @@ namespace SandCastles1
             }
         }
 
-        
+        public Rectangle MonsterRectangle
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)Position.X,
+                    (int)Position.Y,
+                    (int)(Monsters.Width * scale),
+                    (int)(Monsters.Height * scale)
+                );
+            }
+        }
+
+
     }
 }
