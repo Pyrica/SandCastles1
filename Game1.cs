@@ -116,7 +116,7 @@ namespace SandCastles1
                         monster.Update(gameTime, stones, bullets);
                     }
 
-                    // Remove dead monsters
+                  
                     monsters.RemoveAll(m => m.IsDead);
 
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
