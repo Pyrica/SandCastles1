@@ -109,7 +109,7 @@ namespace SandCastles1
                     break;
                 case Stat.Game2:
                     playerWithMonsters.Update(gameTime, stones, monster);
-                    monster.Update(gameTime, playerWithMonsters.Position, stones);
+                    monster.Update(gameTime, stones);
                     
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                         stat = Stat.SplashScreen;

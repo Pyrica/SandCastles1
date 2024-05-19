@@ -20,34 +20,32 @@ namespace SandCastles1
             Monsters = texture;
             Position = position;
             Speed = speed;
+            
         }
 
-        public void Update(GameTime gameTime, Vector2 playerPosition, List<Rectangle> stones)
+        public void Update(GameTime gameTime, List<Rectangle> stones)
         {
-            Rectangle monsterRectangle = new Rectangle((int)MonsterPosition.X, (int)MonsterPosition.Y, (int)(Monsters.Width * scale), (int)(Monsters.Height * scale));
-            playerPosition = PlayerWithMonsters.playerWithMonstersPosition;
-            Vector2 previousPosition = MonsterPosition;
-            Vector2 direction = playerPosition - Position;
+            Rectangle monsterRectangle = new Rectangle((int)Position.X, (int)Position.Y, (int)(Monsters.Width * scale), (int)(Monsters.Height * scale));
+            Vector2 previousPosition = Position;
+
+            Vector2 direction = PlayerWithMonsters.playerWithMonstersPosition - Position;
             if (direction != Vector2.Zero)
             {
                 direction.Normalize();
             }
             Position += direction * 70 * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            monsterRectangle = new Rectangle((int)MonsterPosition.X, (int)MonsterPosition.Y, monsterRectangle.Width, monsterRectangle.Height);
+            monsterRectangle = new Rectangle((int)Position.X, (int)Position.Y, monsterRectangle.Width, monsterRectangle.Height);
 
             foreach (var stone in stones)
             {
                 if (monsterRectangle.Intersects(stone))
                 {
-
-                    MonsterPosition = previousPosition;
+                    // Если пересечение с камнем, то возвращаем монстра на предыдущую позицию
+                    Position = previousPosition;
                     break;
                 }
             }
-
-
-
         }
 
 
@@ -78,6 +76,8 @@ namespace SandCastles1
                 );
             }
         }
+
+        
 
 
     }
