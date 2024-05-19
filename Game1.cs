@@ -51,6 +51,7 @@ namespace SandCastles1
             Cave.CaveBackground = Content.Load<Texture2D>("CaveBackground");
             var monsterTexture1 = Content.Load<Texture2D>("Monster1");
             var monsterTexture2 = Content.Load<Texture2D>("Monster2");
+            var monsterTexture3 = Content.Load<Texture2D>("Monster3");
             var bulletTexture = Content.Load<Texture2D>("Bullet");
 
             player = new Player(playerTexture, new Vector2(100, 100), 2f);
@@ -59,7 +60,8 @@ namespace SandCastles1
             monsters = new List<MonsterBase>
             {
                 new Monster1(monsterTexture1, new Vector2(800, 500), 2f),
-                new Monster2(monsterTexture2, new Vector2(900, 500), 2f)
+                new Monster2(monsterTexture2, new Vector2(900, 500), 2f),
+                new Monster3(monsterTexture3, new Vector2(1000, 500), 2f)
             };
 
             obstacles = new List<Rectangle>
@@ -116,7 +118,6 @@ namespace SandCastles1
                         monster.Update(gameTime, stones, bullets);
                     }
 
-                  
                     monsters.RemoveAll(m => m.IsDead);
 
                     if (Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -129,7 +130,8 @@ namespace SandCastles1
                         monsters = new List<MonsterBase>
                         {
                             new Monster1(Content.Load<Texture2D>("Monster1"), new Vector2(800, 500), 2f),
-                            new Monster2(Content.Load<Texture2D>("Monster2"), new Vector2(1000, 800), 2f)
+                            new Monster2(Content.Load<Texture2D>("Monster2"), new Vector2(900, 500), 2f),
+                            new Monster3(Content.Load<Texture2D>("Monster3"), new Vector2(1000, 500), 2f)
                         };
                     }
 
