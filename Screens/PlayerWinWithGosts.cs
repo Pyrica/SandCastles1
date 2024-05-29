@@ -8,8 +8,8 @@ namespace SandCastles1
         public static void Draw(SpriteBatch spriteBatch, SpriteFont font, GraphicsDevice graphicsDevice)
         {
             graphicsDevice.Clear(Color.DarkBlue);
-            string victoryMessage = "    " +
-                "Поздравляю, вы прошли этот уровень!!!\n\n" +
+            string victoryMessage = "   " +
+                "Поздравляю, вы прошли первый уровень!!!\n\n" +
                 "   " +
                 "К сожалению, другие уровни в доработке,\n" +
                 "  " +
