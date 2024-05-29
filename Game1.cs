@@ -163,6 +163,8 @@ namespace SandCastles1
                         SplashScreen.Update();
                         if (keyboardState.IsKeyDown(Keys.Enter))
                             stat = Stat.Cave;
+                        if (keyboardState.IsKeyDown(Keys.Escape))
+                            Exit();
                         break;
 
                     case Stat.Cave:
