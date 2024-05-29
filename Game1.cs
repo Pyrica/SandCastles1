@@ -9,21 +9,20 @@ namespace SandCastles1
     enum Stat
     {
         SplashScreen,
-        Game,
-        Game2,
+        Cave,
+        CaveWithMonsters,
         PlayerDead,
         PlayerWin,
         CaveTwo,
-        GhostCave,
-        Final,
+        CaveWithGosts,
         Pause,
-        GhostVictory,
-        PlayerDeadWithGost
+        PlayerWinWithGosts,
+        PlayerDeadWithGosts
     }
 
     public class Game1 : Game
     {
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Player player;
         private PlayerWithMonsters playerWithMonsters;
@@ -160,22 +159,22 @@ namespace SandCastles1
                     case Stat.SplashScreen:
                         SplashScreen.Update();
                         if (keyboardState.IsKeyDown(Keys.Space))
-                            stat = Stat.Game;
+                            stat = Stat.Cave;
                         break;
 
-                    case Stat.Game:
+                    case Stat.Cave:
                         player.Update(gameTime, obstacles);
                         if (keyboardState.IsKeyDown(Keys.Escape))
                             stat = Stat.SplashScreen;
 
                         if (keyboardState.IsKeyDown(Keys.E))
-                            stat = Stat.Game2;
+                            stat = Stat.CaveWithMonsters;
 
                         if (keyboardState.IsKeyDown(Keys.U))
                             stat = Stat.CaveTwo;
                         break;
 
-                    case Stat.Game2:
+                    case Stat.CaveWithMonsters:
                         playerWithMonsters.Update(gameTime, stones, bullets, Content.Load<Texture2D>("Bullet"), monsters);
 
                         foreach (var bullet in bullets)
@@ -201,10 +200,10 @@ namespace SandCastles1
                     case Stat.CaveTwo:
                         player.Update(gameTime, obstacles);
                         if (keyboardState.IsKeyDown(Keys.E))
-                            stat = Stat.GhostCave;
+                            stat = Stat.CaveWithGosts;
                         break;
 
-                    case Stat.GhostCave:
+                    case Stat.CaveWithGosts:
                         playerWithGosts.Update(gameTime, stones, gostBullets, Content.Load<Texture2D>("Bullet"), gosts);
 
                         foreach (var bullet in gostBullets)
@@ -216,13 +215,13 @@ namespace SandCastles1
                         gosts.RemoveAll(g => g.IsDead);
 
                         if (gosts.Count == 0)
-                            stat = Stat.GhostVictory;
+                            stat = Stat.PlayerWinWithGosts;
 
                         if (keyboardState.IsKeyDown(Keys.Escape))
                             stat = Stat.SplashScreen;
 
                         if (PlayerWithGosts.Health <= 0)
-                            stat = Stat.PlayerDeadWithGost;
+                            stat = Stat.PlayerDeadWithGosts;
 
                         gostBullets.RemoveAll(b => !b.IsVisible);
                         break;
@@ -230,7 +229,7 @@ namespace SandCastles1
                     case Stat.PlayerDead:
                         if (keyboardState.IsKeyDown(Keys.R))
                         {
-                            stat = Stat.Game;
+                            stat = Stat.Cave;
                             PlayerWithMonsters.Health = 100;
                             PlayerWithGosts.Health = 100;
                             monsters = new List<MonsterBase>
@@ -242,7 +241,7 @@ namespace SandCastles1
                         }
                         break;
 
-                    case Stat.PlayerDeadWithGost:
+                    case Stat.PlayerDeadWithGosts:
                         if (keyboardState.IsKeyDown(Keys.R))
                         {
                             stat = Stat.CaveTwo;
@@ -258,7 +257,7 @@ namespace SandCastles1
                         }
                         break;
 
-                    case Stat.GhostVictory:
+                    case Stat.PlayerWinWithGosts:
                         if (keyboardState.IsKeyDown(Keys.R))
                             stat = Stat.SplashScreen;
                         break;
@@ -284,12 +283,12 @@ namespace SandCastles1
                     SplashScreen.Draw(_spriteBatch);
                     break;
 
-                case Stat.Game:
+                case Stat.Cave:
                     Cave.Draw(_spriteBatch, font, "чтобы\nначать\nнажмите\n  Е");
                     player.Draw(_spriteBatch);
                     break;
 
-                case Stat.Game2:
+                case Stat.CaveWithMonsters:
                     CaveWithMonsters.Draw(_spriteBatch);
                     playerWithMonsters.Draw(_spriteBatch);
                     playerWithMonsters.DrawHealth(_spriteBatch, font);
@@ -308,7 +307,7 @@ namespace SandCastles1
                     player.Draw(_spriteBatch);
                     break;
 
-                case Stat.GhostCave:
+                case Stat.CaveWithGosts:
                     CaveWithMonsters.Draw(_spriteBatch);
                     playerWithGosts.Draw(_spriteBatch);
                     playerWithGosts.DrawHealth(_spriteBatch, font);
@@ -325,7 +324,7 @@ namespace SandCastles1
                     PlayerDead.Draw(_spriteBatch);
                     break;
 
-                case Stat.GhostVictory:
+                case Stat.PlayerWinWithGosts:
                     VictoryScreenForGhosts.Draw(_spriteBatch, victoryFont, GraphicsDevice);
                     break;
 
@@ -333,19 +332,19 @@ namespace SandCastles1
                     VictoryScreen.Draw(_spriteBatch, victoryFont, GraphicsDevice);
                     break;
 
-                case Stat.PlayerDeadWithGost:
+                case Stat.PlayerDeadWithGosts:
                     PlayerDead.Draw(_spriteBatch);
                     break;
 
                 case Stat.Pause:
                     switch (previousStat)
                     {
-                        case Stat.Game:
+                        case Stat.Cave:
                             Cave.Draw(_spriteBatch, font, "чтобы\nначать\nнажмите\n  Е");
                             player.Draw(_spriteBatch);
                             break;
 
-                        case Stat.Game2:
+                        case Stat.CaveWithMonsters:
                             CaveWithMonsters.Draw(_spriteBatch);
                             playerWithMonsters.Draw(_spriteBatch);
                             playerWithMonsters.DrawHealth(_spriteBatch, font);
@@ -365,7 +364,7 @@ namespace SandCastles1
                             player.Draw(_spriteBatch);
                             break;
 
-                        case Stat.GhostCave:
+                        case Stat.CaveWithGosts:
                             CaveWithMonsters.Draw(_spriteBatch);
                             playerWithGosts.Draw(_spriteBatch);
                             playerWithGosts.DrawHealth(_spriteBatch, font);
@@ -384,7 +383,7 @@ namespace SandCastles1
                             PlayerDead.Draw(_spriteBatch);
                             break;
 
-                        case Stat.GhostVictory:
+                        case Stat.PlayerWinWithGosts:
                             VictoryScreenForGhosts.Draw(_spriteBatch, victoryFont, GraphicsDevice);
                             break;
 
@@ -392,7 +391,7 @@ namespace SandCastles1
                             VictoryScreen.Draw(_spriteBatch, victoryFont, GraphicsDevice);
                             break;
 
-                        case Stat.PlayerDeadWithGost:
+                        case Stat.PlayerDeadWithGosts:
                             PlayerDead.Draw(_spriteBatch);
                             break;
                     }
