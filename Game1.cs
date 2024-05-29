@@ -36,7 +36,7 @@ namespace SandCastles1
         private List<GostBase> gosts;
         private SpriteFont font;
         private SpriteFont victoryFont;
-        private SpriteFont victoryGostFont;
+        //private SpriteFont victoryGostFont;
 
         public Game1()
         {
@@ -136,7 +136,12 @@ namespace SandCastles1
                         stat = Stat.SplashScreen;
                     if (keyboardState.IsKeyDown(Keys.E))
                         stat = Stat.Game2;
+                    if (keyboardState.IsKeyDown(Keys.U))
+                    {
+                        stat = Stat.CaveTwo;
+                    }
                     break;
+
                 case Stat.Game2:
                     playerWithMonsters.Update(gameTime, stones, bullets, Content.Load<Texture2D>("Bullet"), monsters);
 
@@ -221,7 +226,7 @@ namespace SandCastles1
                     break;
 
                 case Stat.PlayerDeadWithGost:
-                    if (keyboardState.IsKeyDown(Keys.X))
+                    if (keyboardState.IsKeyDown(Keys.R))
                     {
                         stat = Stat.CaveTwo;
                         PlayerWithMonsters.Health = 100;
@@ -236,7 +241,7 @@ namespace SandCastles1
                     }
                     break;
                 case Stat.GhostVictory:
-                    if (keyboardState.IsKeyDown(Keys.F))
+                    if (keyboardState.IsKeyDown(Keys.R))
                     {
                         stat = Stat.SplashScreen;
                     }
@@ -283,7 +288,7 @@ namespace SandCastles1
                     }
                     break;
                 case Stat.CaveTwo:
-                    CaveTwo.Draw(_spriteBatch, font, "Нажмите\n E\n для\n перехода\n в пещеру");
+                    CaveTwo.Draw(_spriteBatch, font, "Нажмите\n   E\n  для\nперехода\nв пещеру");
                     player.Draw(_spriteBatch);
                     break;
                 case Stat.GhostCave:
@@ -312,7 +317,7 @@ namespace SandCastles1
                     VictoryScreen.Draw(_spriteBatch, victoryFont, GraphicsDevice);
                     break;
                 case Stat.PlayerDeadWithGost:
-                    PlayerDeadWithGost.Draw(_spriteBatch);
+                    PlayerDead.Draw(_spriteBatch);
                     break;
             }
 
