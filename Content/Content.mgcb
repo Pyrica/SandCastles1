@@ -130,6 +130,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Start.spritefont;Start
 
+#begin VictoryFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:VictoryFont.spritefont;VictoryFont
+
 #begin игрок с пистиком.png
 /importer:TextureImporter
 /processor:TextureProcessor
