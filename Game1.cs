@@ -137,7 +137,7 @@ namespace SandCastles1
         {
             var keyboardState = Keyboard.GetState();
 
-            if (keyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
+            if (keyboardState.IsKeyDown(Keys.Space) && !previousKeyboardState.IsKeyDown(Keys.Space))
             {
                 if (stat != Stat.Pause)
                 {
@@ -150,6 +150,9 @@ namespace SandCastles1
                     stat = previousStat;
                     pauseScreen.ToggleVisibility();
                 }
+
+                if (keyboardState.IsKeyDown(Keys.Escape))
+                    stat = Stat.SplashScreen;
             }
 
             if (stat != Stat.Pause)
@@ -158,7 +161,7 @@ namespace SandCastles1
                 {
                     case Stat.SplashScreen:
                         SplashScreen.Update();
-                        if (keyboardState.IsKeyDown(Keys.Space))
+                        if (keyboardState.IsKeyDown(Keys.Enter))
                             stat = Stat.Cave;
                         break;
 
@@ -170,8 +173,6 @@ namespace SandCastles1
                         if (keyboardState.IsKeyDown(Keys.E))
                             stat = Stat.CaveWithMonsters;
 
-                        if (keyboardState.IsKeyDown(Keys.U))
-                            stat = Stat.CaveTwo;
                         break;
 
                     case Stat.CaveWithMonsters:

@@ -7,7 +7,7 @@ namespace SandCastles1
     {
         private bool isVisible;
         private readonly SpriteFont font;
-        private readonly string pauseMessage = "           " + "Пауза\nНажмите Enter для продолжения";
+        private readonly string pauseMessage = "            " + "Пауза\nНажмите Space для продолжения";
 
         public PauseScreen(SpriteFont font)
         {
