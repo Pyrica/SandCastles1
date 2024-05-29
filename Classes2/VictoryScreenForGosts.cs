@@ -8,7 +8,14 @@ namespace SandCastles1
         public static void Draw(SpriteBatch spriteBatch, SpriteFont font, GraphicsDevice graphicsDevice)
         {
             graphicsDevice.Clear(Color.DarkBlue);
-            string victoryMessage = "                 Поздравляю, вы прошли этот уровень!!!\n         К сожалению, другие уровни в доработке, но вы можете пройти этот уровень заново.\n\n          Для прохождения нажмите R.";
+            string victoryMessage = "    " +
+                "Поздравляю, вы прошли этот уровень!!!\n\n" +
+                "   " +
+                "К сожалению, другие уровни в доработке,\n" +
+                "  " +
+                "но вы можете пройти этот уровень заново:)\n\n" +
+                "        " +
+                "Для прохождения нажмите R.";
             Vector2 textSize = font.MeasureString(victoryMessage);
             Vector2 textPosition = new Vector2((graphicsDevice.Viewport.Width - textSize.X) / 2, (graphicsDevice.Viewport.Height - textSize.Y) / 2);
             spriteBatch.DrawString(font, victoryMessage, textPosition, Color.White);
