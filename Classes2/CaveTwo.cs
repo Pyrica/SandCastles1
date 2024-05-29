@@ -13,8 +13,8 @@ namespace SandCastles1
 
             if (!string.IsNullOrEmpty(text))
             {
-                Vector2 textSize = font.MeasureString(text);
-                Vector2 textPosition = new Vector2(120, 170);
+                _ = font.MeasureString(text);
+                Vector2 textPosition = new(120, 170);
                 spriteBatch.DrawString(font, text, textPosition, Color.White);
             }
         }

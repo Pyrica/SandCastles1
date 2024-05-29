@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace SandCastles1
@@ -11,12 +10,10 @@ namespace SandCastles1
         public static Texture2D playerWithGostsTexture;
         public static Vector2 playerWithGostsPosition;
         private Rectangle destinationRectangle;
-        private float playerSpeed;
+        private readonly float playerSpeed;
         private readonly float scale = 0.1f;
-
-        private float fireRate = 0.5f;
+        private readonly float fireRate = 0.5f;
         private float timeSinceLastShot = 0;
-
         public Vector2 Position { get; internal set; }
         public static int Health { get; set; } = 100;
 
@@ -71,9 +68,7 @@ namespace SandCastles1
             foreach (var gost in gosts)
             {
                 if (playerRectangle.Intersects(gost.MonsterRectangle))
-                {
                     Health--;
-                }
             }
 
             if (mstate.LeftButton == ButtonState.Pressed && timeSinceLastShot >= fireRate)
@@ -90,10 +85,10 @@ namespace SandCastles1
         private void ShootAt(List<BulletForGosts> bullets, Texture2D bulletTexture, Vector2 target)
         {
             Vector2 direction = target - playerWithGostsPosition;
+
             if (direction != Vector2.Zero)
-            {
                 direction.Normalize();
-            }
+
             Vector2 bulletStartPosition = new Vector2(
                 playerWithGostsPosition.X + (playerWithGostsTexture.Width * scale / 2),
                 playerWithGostsPosition.Y + (playerWithGostsTexture.Height * scale / 2)
@@ -108,7 +103,7 @@ namespace SandCastles1
 
         public void DrawHealth(SpriteBatch spriteBatch, SpriteFont font)
         {
-            string healthText = $"Player Health: {Health}";
+            string healthText = $"Здоровье игрока: {Health}";
             spriteBatch.DrawString(font, healthText, new Vector2(10, 10), Color.White);
         }
     }
