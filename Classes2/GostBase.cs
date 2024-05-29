@@ -13,7 +13,6 @@ namespace SandCastles1
         private Rectangle destinationRectangle;
         public static Vector2 GostPosition;
         private Vector2 currentDirection;
-
         public int Health { get; set; } = 10;
         public bool IsDead { get; private set; } = false;
 
@@ -28,14 +27,11 @@ namespace SandCastles1
         public void Update(GameTime gameTime, List<Rectangle> stones, List<BulletForGosts> bullets)
         {
             if (IsDead) return;
-
-            Vector2 previousPosition = Position;
-
+            _ = Position;
             Vector2 direction = PlayerWithGosts.playerWithGostsPosition - Position;
+
             if (direction != Vector2.Zero)
-            {
                 direction.Normalize();
-            }
 
             Position += direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -49,9 +45,7 @@ namespace SandCastles1
             }
 
             if (Health <= 0)
-            {
                 IsDead = true;
-            }
         }
 
         public void Draw(SpriteBatch spriteBatch)

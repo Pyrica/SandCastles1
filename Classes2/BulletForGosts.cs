@@ -9,10 +9,9 @@ namespace SandCastles1
         public Vector2 Position;
         public Vector2 Direction;
         public float Speed;
-        private Texture2D Texture;
+        private readonly Texture2D Texture;
         private Rectangle Rectangle;
         public bool IsVisible;
-
         private readonly float scale = 0.02f;
 
         public BulletForGosts(Texture2D texture, Vector2 position, Vector2 direction, float speed)
@@ -22,7 +21,6 @@ namespace SandCastles1
             Direction = direction;
             Speed = speed;
             IsVisible = true;
-
             Rectangle = new Rectangle((int)Position.X, (int)Position.Y, (int)(Texture.Width * scale), (int)(Texture.Height * scale));
         }
 
@@ -44,9 +42,7 @@ namespace SandCastles1
         public void Draw(SpriteBatch spriteBatch)
         {
             if (IsVisible)
-            {
                 spriteBatch.Draw(Texture, Rectangle, Color.White);
-            }
         }
 
         public Rectangle BulletRectangle

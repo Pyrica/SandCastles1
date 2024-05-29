@@ -13,7 +13,6 @@ namespace SandCastles1
         private Rectangle destinationRectangle;
         public static Vector2 MonsterPosition;
         private Vector2 currentDirection;
-
         public int Health { get; set; } = 10;
         public bool IsDead { get; private set; } = false;
 
@@ -30,21 +29,17 @@ namespace SandCastles1
             if (IsDead) return;
 
             Vector2 previousPosition = Position;
-
             Vector2 direction = PlayerWithMonsters.playerWithMonstersPosition - Position;
+
             if (direction != Vector2.Zero)
-            {
                 direction.Normalize();
-            }
 
             if (!TryMove(direction, stones, gameTime))
             {
                 if (!TryMove(new Vector2(direction.Y, -direction.X), stones, gameTime))
                 {
                     if (!TryMove(new Vector2(-direction.Y, direction.X), stones, gameTime))
-                    {
                         Position = previousPosition;
-                    }
                 }
             }
 
@@ -58,9 +53,7 @@ namespace SandCastles1
             }
 
             if (Health <= 0)
-            {
                 IsDead = true;
-            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -102,9 +95,7 @@ namespace SandCastles1
             foreach (var stone in stones)
             {
                 if (tempRectangle.Intersects(stone))
-                {
                     return false;
-                }
             }
 
             Position = newPosition;

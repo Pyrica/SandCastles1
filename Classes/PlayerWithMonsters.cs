@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace SandCastles1
@@ -11,12 +10,10 @@ namespace SandCastles1
         public static Texture2D playerWithMonstersTexture;
         public static Vector2 playerWithMonstersPosition;
         private Rectangle destinationRectangle;
-        private float playerSpeed;
+        private readonly float playerSpeed;
         private readonly float scale = 0.1f;
-
-        private float fireRate = 0.5f;
+        private readonly float fireRate = 0.5f;
         private float timeSinceLastShot = 0;
-
         public Vector2 Position { get; internal set; }
         public static int Health { get; set; } = 100;
 
@@ -70,9 +67,7 @@ namespace SandCastles1
             foreach (var monster in monsters)
             {
                 if (playerRectangle.Intersects(monster.MonsterRectangle))
-                {
                     Health--;
-                }
             }
 
             timeSinceLastShot += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -103,7 +98,7 @@ namespace SandCastles1
 
         public void DrawHealth(SpriteBatch spriteBatch, SpriteFont font)
         {
-            string healthText = $"Player Health: {Health}";
+            string healthText = $"Здоровье игрока: {Health}";
             spriteBatch.DrawString(font, healthText, new Vector2(10, 10), Color.White);
         }
 

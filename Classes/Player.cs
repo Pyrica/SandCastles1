@@ -10,8 +10,8 @@ namespace SandCastles1
         public static Texture2D playerTexture;
         public static Vector2 playerPosition;
         private Rectangle destinationRectangle;
-        float playerSpeed;
-        float scale = 0.1f;
+        readonly float playerSpeed;
+        readonly float scale = 0.1f;
 
         public Player(Texture2D texture, Vector2 position, float speed)
         {

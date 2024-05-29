@@ -99,6 +99,12 @@
 /processorParam:TextureFormat=Color
 /build:Fon3.png;CaveBackground
 
+#begin Music.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music.mp3;Music
+
 #begin PlayerCave.png
 /importer:TextureImporter
 /processor:TextureProcessor
