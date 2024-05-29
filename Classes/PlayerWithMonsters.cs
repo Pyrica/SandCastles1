@@ -100,5 +100,12 @@ namespace SandCastles1
         {
             spriteBatch.Draw(playerWithMonstersTexture, destinationRectangle, Color.White);
         }
+
+        public void DrawHealth(SpriteBatch spriteBatch, SpriteFont font)
+        {
+            string healthText = $"Player Health: {Health}";
+            spriteBatch.DrawString(font, healthText, new Vector2(10, 10), Color.White);
+        }
+
     }
 }
