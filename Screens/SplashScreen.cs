@@ -14,7 +14,7 @@ namespace SandCastles1
         public static void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Background, Vector2.Zero, Color.White);
-            spriteBatch.DrawString(Font, "К приключениям", textPosition, color);
+            spriteBatch.DrawString(Font, "К приключениям\nНажмине Enter", textPosition, color);
         }
 
         public static void Update()
